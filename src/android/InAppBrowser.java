@@ -865,7 +865,27 @@ public class InAppBrowser extends CordovaPlugin {
                 } catch (android.content.ActivityNotFoundException e) {
                     LOG.e(LOG_TAG, "Error sending sms " + url + ":" + e.toString());
                 }
-            } else if(resolvedActivities.size() > 0) {
+            }
+            else if(url.startsWith("orangeetmoicaraibe:")){
+                try {
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setData(Uri.parse(url));
+                    cordova.getActivity().startActivity(intent);
+                    return true;
+                } catch (android.content.ActivityNotFoundException e) {
+                    LOG.e(LOG_TAG, "Error with " + url + ": " + e.toString());
+                }
+            }
+            else if(url.startsWith("foobar:")){
+                try {
+                    cordova.getActivity().startActivity(customSchemeIntent);
+                    closeDialog();
+                    return true;
+                } catch (android.content.ActivityNotFoundException e) {
+                    LOG.e(LOG_TAG, "Error with " + url + ": " + e.toString());
+                }
+            }
+            else if(resolvedActivities.size() > 0) {
                 cordova.getActivity().startActivity(customSchemeIntent);
                 closeDialog();
                 return true;
